@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados</title>
+</head>
+<body>
+  <h1>Resultados do Processamento</h1>
+  <ul id="result-list"></ul>
+
+  <script>
+    // Buscar dados da rota Flask "/results_data" usando Fetch
+    fetch('/results_data')
+      .then(response => response.json()) // Converte a resposta em JSON
+      .then(data => {
+        const results = data.results; // Pega a lista de resultados do JSON
+        const resultList = document.getElementById("result-list");
+  
+        // Manipula o DOM para inserir os resultados
+        results.forEach(item => {
+          // Converte cada item JSON em um objeto JavaScript
+          const result = JSON.parse(item);
+  
+          // Cria a div para envolver os dados
+          const listItem = document.createElement("div");
+          listItem.style.border = "1px solid #ddd"; // Adiciona borda
+          listItem.style.padding = "10px";
+          listItem.style.margin = "10px 0";
+  
+          // Cria o título (h1)
+          const title = document.createElement("h1");
+          title.textContent = result.titulo || "Título não disponível";
+  
+          // Cria a descrição (p)
+          const description = document.createElement("p");
+          description.textContent = result.descricao || "Descrição não disponível";
+  
+          // Cria o preço (h2)
+          const price = document.createElement("h2");
+          price.textContent = result.preco ? `Preço: ${result.preco}` : "Preço não disponível";
+  
+          // Adiciona os elementos à div principal
+          listItem.appendChild(title);
+          listItem.appendChild(description);
+          listItem.appendChild(price);
+  
+          // Adiciona a div ao container principal
+          resultList.appendChild(listItem);
+        });
+      })
+      .catch(error => console.error("Erro ao buscar resultados:", error));
+  </script>
+  
+</body>
+</html>
