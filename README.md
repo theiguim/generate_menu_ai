@@ -61,7 +61,7 @@ Prerequisites
 ```bash
 pip install -r requirements.txt
 ```
-* Install Tesseract: Tesseract OCR must be installed on your system. [here](https://github.com/tesseract-ocr/tesseract). After installation, you will need to configure the path to the Tesseract executable in the code.
+* Install Tesseract: Tesseract OCR must be installed on your system [here](https://github.com/tesseract-ocr/tesseract). After installation, you will need to configure the path to the Tesseract executable in the code.
 
 * Configure Gemini API: The project uses Google's Gemini API to generate JSON from the extracted information. To use the API, you need to obtain a valid API key from Google Cloud. Add this key to the project's .env file, setting the TOKEN_API_GEMINI variable.
 
