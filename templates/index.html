@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
     <title>Upload Image</title>
 </head>
 <body>
-    <h1>Upload an Image</h1>
+    <div class="upload_template">
+        <h1>Upload an Image</h1>
+
+    <p>Esse é um programa de transcrição de imagem para JSON. Ao postar uma imagem, ela passará por um OCR que captará seu texto encaminhando-o para que uma IA o trate, retornando assim um JSON que é postado em um banco de dados, disponível no caminho /results para onde será redirecionado.</p>
+
     <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="file">
         <button type="submit">Upload</button>
     </form>
+    </div>
 </body>
 </html>

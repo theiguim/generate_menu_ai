@@ -38,16 +38,35 @@ def generate_json_ai(text):
     clean_response = ""
 
     try:
-        genai.configure(api_key= os.getenv("TOKEN_API_GEMINI"))
+        genai.configure(api_key=os.getenv("TOKEN_API_GEMINI"))
         model = genai.GenerativeModel("gemini-1.5-flash")
-        response = model.generate_content(f"Me retorne os seguintes dados com uma tag de titulo e descrição em formato JSON. O retornod eve ser em JSON apenas os itens extraídos entre chaves: {text}")
+        
+        prompt = (
+            f"Por favor, analise a foto do cardápio e extraia as informações de cada produto. "
+            f"Para cada produto, forneça as seguintes informações em formato JSON: "
+            f"- Título do produto "
+            f"- Descrição do produto "
+            f"- Preço do produto "
+            f"Cada produto deve ser representado como um objeto com as chaves `title`, `description` e `price`. "
+            f"O resultado final deve ser uma lista de objetos JSON, onde cada objeto representa um produto do cardápio. "
+            f"Exemplo de formato desejado: "
+            f"[ "
+            f"{{ \"title\": \"Produto 1\", \"description\": \"Descrição do Produto 1\", \"price\": \"R$ 10,00\" }}, "
+            f"{{ \"title\": \"Produto 2\", \"description\": \"Descrição do Produto 2\", \"price\": \"R$ 20,00\" }}, "
+            f"{{ \"title\": \"Produto 3\", \"description\": \"Descrição do Produto 3\", \"price\": \"R$ 30,00\" }} "
+            f"] "
+            f"Certifique-se de que a descrição e o preço estejam claramente identificados e que o formato do preço seja consistente "
+            f"(exemplo: R$ 10,00 ou 10,00). Eis o cardápio: {text}"
+        )
 
+        response = model.generate_content(prompt)
         clean_response = re.sub(r'```json|```', '', response.text).strip()
         data = json.loads(clean_response)
         return data
         
     except Exception as e:
          return {"error": f"Failed to generate JSON: {e}"}
+
     
 
 @app.route("/upload", methods=['POST'])
